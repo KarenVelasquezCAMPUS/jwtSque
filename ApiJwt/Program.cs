@@ -2,6 +2,7 @@ using System.Reflection;
 using ApiJwt.Extension;
 using ApiJwt.Helpers;
 using Microsoft.EntityFrameworkCore;
+using AspNetCoreRateLimit;
 using Persistence;
 using Serilog;
 
@@ -17,10 +18,11 @@ builder.Logging.AddSerilog(logger);
 
 builder.Services.AddControllers();
 builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
+builder.Services.ConfigureRateLimit();
 builder.Services.ConfigureCors();
 builder.Services.AddAplicacionServices();
 builder.Services.AddJwt(builder.Configuration);
@@ -33,12 +35,15 @@ builder.Services.AddDbContext<JwtAppContext>(options =>
 
 var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+		app.UseIpRateLimiting();
 }
+
 using (var scope = app.Services.CreateScope())
 {
 	var services = scope.ServiceProvider;
