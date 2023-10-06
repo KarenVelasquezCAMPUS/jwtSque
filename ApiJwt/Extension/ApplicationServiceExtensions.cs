@@ -7,6 +7,8 @@ using Domain.Entities;
 using Domain.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.IdentityModel.Tokens;
 
 namespace ApiJwt.Extension;
@@ -76,6 +78,25 @@ public static class ApplicationServiceExtensions
                     Limit = 2
                 }
             };
+        });
+    }
+
+    // Versionado
+    public static void ConfigureApiVersioning(this IServiceCollection services)
+    {
+        services.AddApiVersioning(options =>
+        {
+            options.DefaultApiVersion = new ApiVersion(1, 0);
+            options.AssumeDefaultVersionWhenUnspecified = true;
+
+            //Para una versión 
+            //options.ApiVersionReader = new QueryStringApiVersionReader("ver");
+
+            //Para ambas versiones
+            options.ApiVersionReader = ApiVersionReader.Combine(
+                new QueryStringApiVersionReader("ver"),
+                new HeaderApiVersionReader ("X-Version")
+            );
         });
     }
 }

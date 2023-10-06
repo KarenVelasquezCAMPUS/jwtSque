@@ -27,4 +27,13 @@ public class UserRepository : GenericRepository<User>, IUserRepository
             .Include(u => u.RefreshTokens)
             .FirstOrDefaultAsync(u => u.Username.ToLower() == username.ToLower());
     }
+
+    /* 
+    //ejemplo de querys
+    public async Task<IEnumerable<Receta>> ObtenerRecetasEmitidasDespuesDeFechaAsync()
+    {
+        return await _context.Recetas
+            .Where(r => r.FechaEmision > new DateTime(2023, 01, 01) )
+            .ToListAsync();
+    } */
 }

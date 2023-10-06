@@ -23,6 +23,7 @@ builder.Services.AddAutoMapper(Assembly.GetEntryAssembly());
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.ConfigureRateLimit();
+builder.Services.ConfigureApiVersioning();
 builder.Services.ConfigureCors();
 builder.Services.AddAplicacionServices();
 builder.Services.AddJwt(builder.Configuration);

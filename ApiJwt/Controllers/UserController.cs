@@ -67,5 +67,34 @@ public class UserController : ApiBaseController
         };
         Response.Cookies.Append("refreshToken", refreshToken, cookieOptions);
     }
-    
+
+    /* 
+    // pager
+
+    [HttpGet]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<ActionResult<Pager<PaisxDepaDto>>> Get11([FromQuery] Params paisParams)
+    {
+        var pais = await unitofwork.Paises.GetAllAsync(paisParams.PageIndex, paisParams.PageSize, paisParams.Search);
+        var lstPaisesDto = mapper.Map<List<PaisxDepaDto>>(pais.registros);
+        return new Pager<PaisxDepaDto>(lstPaisesDto, pais.totalRegistros, paisParams.PageIndex, paisParams.PageSize, paisParams.Search);
+    } 
+
+    // params 
+
+    [HttpGet]
+    [MapToApiVersion("1.1")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+    public async Task<ActionResult<Pager<PaisxDepaDto>>> Get11([FromQuery] Params paisParams)
+    {
+        var pais = await unitofwork.Paises.GetAllAsync(paisParams.PageIndex, paisParams.PageSize, paisParams.Search);
+        var lstPaisesDto = mapper.Map<List<PaisxDepaDto>>(pais.registros);
+        return new Pager<PaisxDepaDto>(lstPaisesDto, pais.totalRegistros, paisParams.PageIndex, paisParams.PageSize, paisParams.Search);
+    }
+    */
+
 }
